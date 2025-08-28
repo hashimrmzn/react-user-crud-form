@@ -44,8 +44,14 @@ function SimpleReactForm() {
 
   return (
     <Box sx={{ p: 1, maxWidth: 1240, mx: "auto" }}>
-      <Paper sx={{ p: 2 }} elevation={4}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom align="center">
+      <Paper sx={{ p: { xs: 2, md: 3 } }} elevation={4}>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          gutterBottom
+          align="center"
+          sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}
+        >
           Add User
         </Typography>
 
@@ -53,8 +59,12 @@ function SimpleReactForm() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 1,
+              gridTemplateColumns: {
+                xs: "1fr", 
+                sm: "repeat(2, 1fr)", 
+                md: "repeat(4, 1fr)", 
+              },
+              gap: 2,
             }}
           >
             <TextField
@@ -125,7 +135,7 @@ function SimpleReactForm() {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ gridColumn: { xs: "1", md: "auto" } }}>
               <FormLabel>Gender</FormLabel>
               <RadioGroup
                 row
@@ -150,7 +160,7 @@ function SimpleReactForm() {
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
-              sx={{ gridColumn: "1 / -1" }}
+              sx={{ gridColumn: "1 / -1" }} 
             />
           </Box>
 
@@ -160,7 +170,7 @@ function SimpleReactForm() {
               color="primary"
               type="submit"
               size="large"
-              sx={{ px: 6, py: 1.5 }}
+              sx={{ px: { xs: 3, md: 6 }, py: { xs: 1, md: 1.5 } }}
             >
               Add User
             </Button>
@@ -174,9 +184,9 @@ function SimpleReactForm() {
           display: "grid",
           gap: 2,
           gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
+            xs: "1fr", 
+            sm: "repeat(2, 1fr)", 
+            md: "repeat(3, 1fr)", 
           },
         }}
       >
