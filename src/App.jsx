@@ -1,4 +1,5 @@
 import './App.css'
+import ReactHookFormCRUD from './FormComponents/ReactHookFormCRUD'
 import SimpleReactForm from './FormComponents/SimpleReactForm'
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
   return (
     <>
       <div className='form-wrapper'>
-        <SimpleReactForm />
+       <ReactHookFormCRUD />
       </div>
     </>
   )
