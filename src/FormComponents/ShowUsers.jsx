@@ -22,7 +22,7 @@ function ShowUsers({users,handleEdit,handleDelete}) {
             p: 3,
             borderRadius: 2,
             mt: { xs: 2, md: 0 },
-            width: { xs: "100%", md: "30%" },
+            width: {  md: "30%" },
           }}
         >
           <Typography variant="h6" gutterBottom>
