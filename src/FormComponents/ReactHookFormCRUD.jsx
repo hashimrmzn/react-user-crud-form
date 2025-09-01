@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
+import { userSchema } from "./validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Container,
@@ -19,40 +19,7 @@ import {
   Divider,
   Stack,
 } from "@mui/material";
-
-
-const schema = yup.object().shape({
-  fname: yup
-    .string()
-    .required("First name is required")
-    .matches(/^[A-Za-z\s]+$/, "Only letters allowed"),
-
-  lname: yup
-    .string()
-    .required("Last name is required")
-    .matches(/^[A-Za-z\s]+$/, "Only letters allowed"),
-
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email format"),
-
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Min 8 characters")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Must contain letters & numbers"),
-
-  userType: yup.string().required("Select user type"),
-
-  gender: yup.string().required("Select gender"),
-
-  userDescription: yup
-    .string()
-    .required("Description is required")
-    .min(5, "Min 5 characters")
-    .max(200, "Max 200 characters"),
-});
+import ShowUsers from "./ShowUsers";
 
 function ReactHookFormCRUD() {
   const {
@@ -60,19 +27,21 @@ function ReactHookFormCRUD() {
     register,
     handleSubmit,
     reset,
+    
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     defaultValues: {
       fname: "",
       lname: "",
       email: "",
+      phone: "",
       password: "",
       userType: "",
       gender: "",
       userDescription: "",
     },
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(userSchema),
   });
 
   const [users, setUsers] = useState([]);
@@ -101,6 +70,7 @@ function ReactHookFormCRUD() {
 
   return (
     <Container
+    className="form-container"
       sx={{
         mt: 5,
         display: "flex",
@@ -108,7 +78,7 @@ function ReactHookFormCRUD() {
         gap: 2,
       }}
     >
-  
+
       <Paper
         elevation={3}
         sx={{
@@ -122,15 +92,15 @@ function ReactHookFormCRUD() {
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-         
+
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", sm: "row" }, 
-              gap: 2, 
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 2,
             }}
           >
-         
+
             <TextField
               fullWidth
               label="First Name"
@@ -142,7 +112,7 @@ function ReactHookFormCRUD() {
               sx={{ flex: 1, minWidth: { xs: "100%", sm: "48%" } }}
             />
 
-          
+
             <TextField
               fullWidth
               label="Last Name"
@@ -158,10 +128,10 @@ function ReactHookFormCRUD() {
             sx={{
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
-              gap: 2, 
+              gap: 2,
             }}
           >
-         
+
             <TextField
               fullWidth
               label="Email"
@@ -173,7 +143,6 @@ function ReactHookFormCRUD() {
               sx={{ flex: 1, minWidth: { xs: "100%", sm: "48%" } }}
             />
 
-       
             <TextField
               fullWidth
               type="password"
@@ -189,7 +158,26 @@ function ReactHookFormCRUD() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", sm: "row" }, 
+              flexDirection: { sm: "row" },
+              alignItems: "center",
+            }}
+          >
+            <TextField
+              label="phone Number"
+              margin="normal"
+              type="phone"
+              {...register("phone")}
+              error={!!errors.phone}
+              helperText={errors.phone?.message}
+              InputLabelProps={{ shrink: true }}
+              sx={{ flex: 1, maxWidth: { xs: "100%", sm: "70%" } }}
+            >
+            </TextField>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
               gap: 2,
               alignItems: "center",
             }}
@@ -220,7 +208,6 @@ function ReactHookFormCRUD() {
             />
 
 
-          
             <Controller
               name="gender"
               control={control}
@@ -232,7 +219,9 @@ function ReactHookFormCRUD() {
                   error={!!errors.gender}
                   sx={{ flex: 1, minWidth: { xs: "100%", sm: "48%" } }}
                 >
-                  <FormLabel>Gender</FormLabel>
+                  <FormLabel
+                  sx={{textAlign:"start"}}
+                  >Gender</FormLabel>
                   <RadioGroup row {...field}>
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
@@ -247,7 +236,7 @@ function ReactHookFormCRUD() {
 
           </Box>
 
-      
+
           <TextField
             fullWidth
             multiline
@@ -260,7 +249,7 @@ function ReactHookFormCRUD() {
             InputLabelProps={{ shrink: true }}
           />
 
-        
+
           <Box display="flex" justifyContent="space-between" mt={3}>
             <Button
               type="submit"
@@ -284,61 +273,12 @@ function ReactHookFormCRUD() {
         </form>
       </Paper>
 
- 
-      {users.length > 0 && (
-        <Paper
-          elevation={2}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            mt: { xs: 2, md: 0 },
-            width: { xs: "100%", md: "30%" },
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            All Users
-          </Typography>
-          <Divider sx={{ mb: 2 }} />
-
-          {users.map((user, index) => (
-            <Box
-              key={index}
-              sx={{
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                p: 2,
-                mb: 2,
-              }}
-            >
-              <Typography>
-                <b>User {index + 1}:</b> {user.fname} {user.lname} ({user.email})
-              </Typography>
-              <Typography variant="body2">
-                Type: {user.userType}, Gender: {user.gender}
-              </Typography>
-              <Typography variant="body2">{user.userDescription}</Typography>
-
-              <Stack direction="row" spacing={2} mt={2}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={() => handleEdit(user, index)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  onClick={() => handleDelete(index)}
-                >
-                  Delete
-                </Button>
-              </Stack>
-            </Box>
-          ))}
-        </Paper>
-      )}
+   <ShowUsers  
+   users={users}
+   handleEdit={handleEdit}
+   handleDelete={handleDelete}
+   />
+    
     </Container>
   );
 }

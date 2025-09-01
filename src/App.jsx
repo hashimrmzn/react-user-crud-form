@@ -1,6 +1,5 @@
 import './App.css'
 import ReactHookFormCRUD from './FormComponents/ReactHookFormCRUD'
-import SimpleReactForm from './FormComponents/SimpleReactForm'
 
 function App() {
 

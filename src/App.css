@@ -5,39 +5,35 @@
       width: 100%;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.form-container input,.form-container .MuiSelect-select{
+  padding: 10px 14px !important;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.form-container label{
+  color: #000 !important;
+  font-weight: 600 !important;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.form-container button{
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid transparent;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-container .Mui-disabled{
+  opacity: .5;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.form-container button:hover{
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #000;
+}
+.form-container .MuiFormControl-root .Mui-checked {
+    color: #000 !important;
+}
+.form-container ul{
+background-color: #000 !important;
 }
 
-.card {
-  padding: 2em;
-}
 
-.read-the-docs {
-  color: #888;
-}
+
+
+
+
