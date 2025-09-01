@@ -82,9 +82,9 @@ function ReactHookFormCRUD() {
       <Paper
         elevation={3}
         sx={{
-          p: 4,
+          p:{md:4,xs:2},
           borderRadius: 3,
-          width: { xs: "100%", md: "70%" },
+          width: { md: "70%" },
         }}
       >
         <Typography variant="h5" gutterBottom align="center" fontWeight="bold">
